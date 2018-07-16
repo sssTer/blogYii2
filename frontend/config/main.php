@@ -36,14 +36,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+
+        'backendUrlManager' => require yii::getAlias('@backendUrlManager'),
+        'frontendUrlManager' => require yii::getAlias('@frontendUrlManager'),
+        'urlManager' => function () {
+            return Yii::$app->get('frontendUrlManager');
+        },
+
     ],
+
     'params' => $params,
 ];

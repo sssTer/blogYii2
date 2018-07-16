@@ -1,4 +1,7 @@
 <?php
+
+use yii\filters\AccessControl;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -37,14 +40,25 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+
+        'backendUrlManager' => require yii::getAlias('@backendUrlManager'),
+        'frontendUrlManager' => require yii::getAlias('@frontendUrlManager'),
+        'urlManager' => function () {
+            return Yii::$app->get('backendUrlManager');
+        }
+    ],
+
+        'as access' => [
+            'class' => AccessControl::className(),
+            'except' => ['site/login', 'auth-site/error', 'site/logout'],
             'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
             ],
         ],
-        */
-    ],
+
+
     'params' => $params,
 ];
