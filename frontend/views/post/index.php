@@ -23,48 +23,49 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-                [
-                    'attribute' => 'id',
-                    'label' => 'User',
-                    'value' => function (Post $post) {
-                        $user = User::findOne($post->author_id);
-                        return ($user->username);
-                    },
-                    'filter' => ArrayHelper::map(
-                        User::find()->all(),
-                        'id',
-                        'username'),
-                ],
-                'author_id',
-                'title',
-//                'content',
-                [
-                    'attribute' => 'content',
-                    'value' => function (Post $post) {
-                        $length = 200;
-                        $str = substr($post->content, 0, $length);
-                        if (strlen($post->content) > $length) {
-                            $str .= '...';
-                        }
-                        return $str;
-                    },
-                    'contentOptions' => [
-                            'style' => "white-space: normal; max-width: 500px;"
-                    ],
-                ],
-
-                //'category_id',
-                //'comment_status',
-                //'karma',
-                //'date',
-
-                ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'id',
+                'label' => 'User',
+                'value' => function (Post $post) {
+                    $user = User::findOne($post->author_id);
+                    return ($user->username);
+                },
+                'filter' => ArrayHelper::map(
+                    User::find()->all(),
+                    'id',
+                    'username'),
             ],
-        ]);
-     ?>
+//                'author_id',
+            'title',
+            [
+                'attribute' => 'content',
+                'value' => function (Post $post) {
+                    $length = 200;
+                    $str = substr($post->content, 0, $length);
+                    if (strlen($post->content) > $length) {
+                        $str .= '...';
+                    }
+                    return $str;
+                },
+                'contentOptions' => [
+                    'style' => "white-space: normal; max-width: 500px;"
+                ],
+            ],
+
+            //'category_id',
+            //'comment_status', //закрыт-открыт для комментирвоания
+            //'karma',
+            'date',
+
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view}{update}',
+            ],
+        ],
+    ]);
+    ?>
 </div>

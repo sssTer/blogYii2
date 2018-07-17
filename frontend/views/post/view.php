@@ -10,9 +10,11 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="post-view">
-
+<!--<div class="post-view">-->
+<div>
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <p><?=Html::encode($model->content) ?></p>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -24,19 +26,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'author_id',
-            'title',
-            'content:ntext',
-            'category_id',
-            'comment_status',
-            'karma',
-            'date',
-        ],
-    ]) ?>
 
 </div>
