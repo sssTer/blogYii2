@@ -17,16 +17,17 @@ return [
     'modules' => [],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-backend',
+            'csrfParam' => 'csrf-session',
+
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => '.blog.test'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
+            'name' => 'session',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -48,16 +49,16 @@ return [
         }
     ],
 
-        'as access' => [
-            'class' => AccessControl::className(),
-            'except' => ['site/login', 'auth-site/error', 'site/logout'],
-            'rules' => [
-                [
-                    'allow' => true,
-                    'roles' => ['@'],
-                ],
+    'as access' => [
+        'class' => AccessControl::className(),
+        'except' => ['site/login', 'auth-site/error', 'site/logout'],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
         ],
+    ],
 
 
     'params' => $params,

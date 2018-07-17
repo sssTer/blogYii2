@@ -7,7 +7,7 @@ return [
     'rules' => [
         '/' => 'site/index', // main page
         '/login' => '/site/login',
-        '/tables/user' => '/user',
+//        '/tables/user' => '/user',
 
     ],
 ];
