@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Post;
 use frontend\models\PostSearch;
+use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,8 +67,17 @@ class PostController extends Controller
     {
         $model = new Post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $user = Yii::$app->request->getAuthUser();
+        if ($model->load(Yii::$app->request->post())) {
+            try {
+                $model->author_id = Yii::$app->user->identity->getId();
+                $model->date = new Expression('CURRENT_TIMESTAMP()');
+                $model->save();
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            } catch (\Exception $ex) {
+                echo $ex->getMessage();
+            }
         }
 
         return $this->render('create', [
