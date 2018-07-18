@@ -38,18 +38,16 @@ use yii\helpers\Url;
                     $("select#category").html(data).attr("id")
                 }
             )'
-        ])
+        ]
+    )
     ?>
 
 <!--    <?//= $form->field($model, 'category_id')->textInput() ?>-->
 
-    <?= $form->field($model, 'comment_status')->textInput() ?>
-
-    <?php
-
-        $model->date = strtotime('Now');
-
-    ?>
+    <?= $form->field($model, 'comment_status')->dropDownList(
+        ['0' => 'Closed', '1' => 'Open'],
+        ['options'=>['1'=>['Selected'=>true]]]
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

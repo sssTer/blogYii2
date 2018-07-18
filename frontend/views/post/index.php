@@ -59,6 +59,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'category_id',
             //'comment_status', //закрыт-открыт для комментирвоания
+            [
+                'attribute' => 'comment_status',
+                'value' => function (Post $post) {
+                    switch ($post->comment_status ) {
+                        case 1:
+                        default:
+                            return 'Open';
+                        case 0:
+                            return 'Closed';
+                    }
+                },
+
+                'filter' => ['0' => 'Closed' , '1' => 'Open']
+
+
+            ],
+
             //'karma',
             'date',
 
